@@ -1,0 +1,20 @@
+{
+  "name": "hw_jsaqa_7_6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ChromeHeadless": "npx cypress run --browser chrome --headless",
+    "ChromeMobile": "npx cypress run --browser chrome --headed --config-file cypress.env.json",
+    "ElectronHeadless": "npx cypress run --browser electron --headless",
+    "ElectronMobile": "npx cypress run --browser electron --headed --config-file cypress.env.json"
+  },
+  "keywords": [
+    "Cypress"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.1.0"
+  }
+}
