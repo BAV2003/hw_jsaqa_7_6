@@ -31,3 +31,11 @@
     cy.get("#pass").type(password);
     cy.contains("Submit").click();
   });
+
+  Cypress.Commands.add("createNewBook", (title, description, author) => {
+    cy.contains("Add new").click();
+    cy.get("#title").type(title);
+    cy.get("#description").type(description);
+    cy.get("#authors").type(author);
+    cy.contains("Submit").click();
+  });  

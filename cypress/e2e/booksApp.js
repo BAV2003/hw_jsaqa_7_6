@@ -1,4 +1,4 @@
-describe("BooksApp Tests", () => {
+describe("BooksApp login Tests", () => {
   beforeEach(() => {
     cy.viewport(Cypress.env("viewportWidth"), Cypress.env("viewportHeight"));
     cy.visit('/');
@@ -18,15 +18,35 @@ describe("BooksApp Tests", () => {
     cy.login("test@test.com", null);
     cy.get("#pass").then((el) => el[0].checkValidity()).should("be.false");
   });
+});
+
+describe("BooksApp books Tests", () => {
+
+  let book;
+
+  beforeEach(() => {
+    cy.viewport(Cypress.env("viewportWidth"), Cypress.env("viewportHeight"));
+    cy.visit('/');
+    cy.login("test@test.com", "test");
+    book = {
+      title: "American Gods",
+      description: "A novel about old and new gods",
+      author: "Neil Gaiman",
+    }
+  });
 
   it("Add favorite book", () => {
-    cy.login("test@test.com", "test");
-    cy.contains("Add new").click();
-    cy.get("#title").type("American Gods");
-    cy.get("#description").type("A novel about old and new gods");
-    cy.get("#authors").type("Neil Gaiman");
-    cy.contains("Submit").click();
+    cy.createNewBook(book);
     cy.visit("/favorites");
-    cy.get(".card-title").contains("American Gods");
+    cy.get(".card-title").contains(book.title);
+  });
+
+  it("Delete book from favorite", () => {
+    cy.createNewBook(book);
+    cy.visit("/favorites");
+    cy.contains(book.title).should("be.visible")
+      .within(() => cy.get(".card-footer > .btn")
+      .click({ force: true }));
+    cy.contains(book.title).should("not.exist");
   });
 });
